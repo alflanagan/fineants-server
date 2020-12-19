@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  django:
+    image: fineants
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_USER: fineants
+      DB_PASSWORD: fineants
+      DB_NAME: fineants
+    depends_on: 
+      - postgres
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: finants
+      POSTGRES_USER: finants
+    volumes:
+      - fineants-db:/var/lib/postgresql/data
+
+volumes: 
+  fineants-db:

@@ -10,16 +10,12 @@ RUN apt-get update && apt-get install -qy \
 
 RUN pip install --upgrade pip setuptools wheel pip-tools
 
-# RUN adduser --disabled-password --gecos '' fineants
-
-# USER fineants
-# WORKDIR $HOME
-
-COPY ./requirements.ini .
-RUN pip-compile requirements.ini
+COPY ./requirements.in .
+RUN pip-compile requirements.in
 RUN pip-sync requirements.txt
 
-COPY . .
-WORKDIR fineants
-RUN python manage.py migrate && python manage.py collectstatic --no-input
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+COPY . /fineants
+WORKDIR /fineants/fineants
+RUN python manage.py collectstatic --no-input
+# can't actually do anything w/out database
+CMD ["/bin/bash", "-c", "python manage.py"]

@@ -4,25 +4,27 @@ services:
     image: fineants
     build:
       context: .
+      dockerfile: "./Dockerfile"
     ports:
-      - "8080:8080"
+      - "8000:8000"
+    expose:
+      - "8000"
     environment:
       DB_HOST: postgres
       DB_USER: fineants
       DB_PASSWORD: fineants
       DB_NAME: fineants
-    depends_on: 
+    depends_on:
       - postgres
+    command: /bin/bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
   postgres:
-    image: postgres
+    image: postgres:alpine
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
+    restart: always
     environment:
-      POSTGRES_PASSWORD: finants
-      POSTGRES_USER: finants
-    volumes:
-      - fineants-db:/var/lib/postgresql/data
-
-volumes: 
-  fineants-db:
+      POSTGRES_PASSWORD: fineants
+      POSTGRES_USER: fineants

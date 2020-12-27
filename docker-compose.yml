@@ -16,6 +16,8 @@ services:
       DB_NAME: fineants
     depends_on:
       - postgres
+    volumes:
+      - .:/fineants
     command: /bin/bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
   postgres:

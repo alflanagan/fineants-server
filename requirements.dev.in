@@ -1,0 +1,6 @@
+# black
+django-debug-toolbar
+docker-compose
+isort
+pylint
+pylint-django

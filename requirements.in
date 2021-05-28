@@ -1,10 +1,9 @@
 Django
 django-extensions
-pylint
-yapf
-psycopg2
-django-debug-toolbar
 djangorestframework
 gunicorn[eventlet]
-pylint-django
-docker-compose
+psycopg2-binary
+pyPDF3
+# black is dev dependency, but has to be in same file as Django to allow
+# pip-compile to resolve dependency conflict
+black

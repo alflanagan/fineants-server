@@ -7,6 +7,8 @@ services:
       dockerfile: "./Dockerfile"
     ports:
       - "8000:8000"
+    stdin_open: true
+    tty: true
     expose:
       - "8000"
     environment:
@@ -17,8 +19,9 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/fineants
-    command: /bin/bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      - ./fineants:/app/fineants/
+    command: /usr/bin/zsh -c "pwd; . /app/.venv/bin/activate; python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    # command: /usr/bin/zsh -li
 
   postgres:
     image: postgres:alpine
@@ -30,3 +33,9 @@ services:
     environment:
       POSTGRES_PASSWORD: fineants
       POSTGRES_USER: fineants
+    volumes:
+        - fineants-postgres:/var/lib/postgresql/data
+
+volumes:
+    fineants-postgres:
+        external: true

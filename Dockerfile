@@ -8,17 +8,16 @@ RUN apt-get update && apt-get install -qy \
     libxmlsec1-dev libffi-dev liblzma-dev \
     postgresql-server-dev-11 zsh
 
-RUN pip install --upgrade pip setuptools wheel pip-tools
-
-
-WORKDIR /fineants/
-COPY requirements.txt requirements.dev.txt ./
+WORKDIR /app/
 
 RUN python -m venv .venv/
-RUN . .venv/bin/activate; pip-sync requirements.*txt
+COPY requirements.txt requirements.dev.txt ./
+RUN . .venv/bin/activate; python -m pip install --upgrade pip setuptools wheel pip-tools; \
+    pip-sync requirements.*txt
 
-COPY . /fineants/
+COPY . /app/fineants/
 
-WORKDIR /fineants/fineants/
+WORKDIR /app/fineants/
+
 # can't actually do anything w/out database
-CMD ["/bin/bash", "-c", "python manage.py"]
+#CMD ["/bin/bash", "-c", ". ../.venv/bin/activate; python manage.py runserver 0.0.0.0:8000"]

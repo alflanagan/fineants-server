@@ -2,6 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import logging
+import time
+
+from django.db.utils import OperationalError
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -15,7 +21,16 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    execute_from_command_line(sys.argv)
+    db_errors = 0
+
+    try:
+        execute_from_command_line(sys.argv)
+    except OperationalError as oe:
+        logger.warning(oe)
+        db_errors += 1
+        if db_errors > 2:
+            raise
+        time.sleep(10)
 
 
 if __name__ == '__main__':

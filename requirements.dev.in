@@ -4,3 +4,4 @@ docker-compose
 isort
 pylint
 pylint-django
+ipython

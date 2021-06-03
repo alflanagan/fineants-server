@@ -8,3 +8,4 @@ psycopg2-binary
 black
 # money fields (note: can add exchange rate support if needed)
 django-money
+pdfminer.six

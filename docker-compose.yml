@@ -19,9 +19,9 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./fineants:/app/fineants/
+      - ./fineants:/home/fineants/app/fineants/
     command: /usr/bin/zsh -c "pwd; . /app/.venv/bin/activate; python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    # command: /usr/bin/zsh -li
+    # command: /usr/bin/zsh -i
 
   postgres:
     image: postgres:alpine

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'accounts.apps.AccountsConfig',
     'bofa.apps.BofaConfig',
+    'wellsfargo.apps.WellsfargoConfig',
 ]
 
 MIDDLEWARE = [

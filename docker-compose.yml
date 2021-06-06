@@ -20,7 +20,7 @@ services:
       - postgres
     volumes:
       - ./fineants:/home/fineants/app/fineants/
-    command: /usr/bin/zsh -c ". /home/fineants/app/.venv/bin/activate; python fineants/manage.py migrate; python fineants/manage.py runserver 0.0.0.0:8000"
+    command: /usr/bin/zsh -c ". /home/fineants/app/.venv/bin/activate; python /home/fineants/app/fineants/manage.py migrate; python /home/fineants/app/fineants/manage.py runserver 0.0.0.0:8000"
 
   postgres:
     image: postgres:alpine

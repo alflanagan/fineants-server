@@ -1,7 +1,8 @@
+# should be here, but has to be in requirements.in
 # black
 django-debug-toolbar
 docker-compose
+ipython
 isort
 pylint
 pylint-django
-ipython

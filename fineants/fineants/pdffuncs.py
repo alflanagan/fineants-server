@@ -1,32 +1,33 @@
-from io import StringIO
 import argparse
+from typing import Iterable
 
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfdocument import PDFDocument
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.pdfpage import PDFPage
-from pdfminer.pdfparser import PDFParser
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTTextBoxHorizontal
 
-
-def get_text(fd: open) -> str:
-    output_string = StringIO()
-    parser = PDFParser(fd)
-    doc = PDFDocument(parser)
-    rsrcmgr = PDFResourceManager()
-    device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
-    interpreter = PDFPageInterpreter(rsrcmgr, device)
-    for page in PDFPage.create_pages(doc):
-        interpreter.process_page(page)
-    return output_string.getvalue()
+# keeping this for now as example of lower-level parsing. better way is below it
+# def get_text(fd: open) -> str:
+#     output_string = StringIO()
+#     parser = PDFParser(fd)
+#     doc = PDFDocument(parser)
+#     rsrcmgr = PDFResourceManager()
+#     device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
+#     interpreter = PDFPageInterpreter(rsrcmgr, device)
+#     for page in PDFPage.create_pages(doc):
+#         interpreter.process_page(page)
+#     return output_string.getvalue()
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Extract text from a Wells Fargo statement PDF')
-    parser.add_argument('pdf_file', type=lambda fname: open(fname, 'rb'), help='The PDF downloaded from Wells Fargo')
+def get_text(fd: open) -> Iterable[str]:
+    """
+    Reads the open PDF file and returns an Iterable of the strings found.
 
-    opts = parser.parse_args()
-    try:
-        print(get_text(opts.pdf_file))
-    finally:
-        opts.pdf_file.close()
+    Does not close `fd`!
+    """
+    lines = []
+    pages = extract_pages(opts.pdf_file)
+    for page_layout in pages:
+        for element in page_layout:
+            if isinstance(element, LTTextBoxHorizontal):
+                for line in element:
+                    lines.append(line)
+    return lines

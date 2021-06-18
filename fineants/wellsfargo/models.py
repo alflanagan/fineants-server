@@ -5,13 +5,16 @@ from djmoney.models.fields import MoneyField
 class WellsFargoStatement(models.Model):
     account = models.CharField('Account Number', max_length=20, blank=False)
     stmt_date = models.DateField('Statement Date', help_text='Date statement printed')
-    beginning_bal = MoneyField(max_digits=19, decimal_places=4, default_currency='USD')
-    ending_bal = MoneyField(max_digits=19, decimal_places=4, default_currency='USD')
-    total_debits = MoneyField(max_digits=19, decimal_places=4, default_currency='USD')
-    total_credits = MoneyField(max_digits=19, decimal_places=4, default_currency='USD')
+    beginning_bal = MoneyField('Beginning Balance', max_digits=19, decimal_places=4, default_currency='USD')
+    ending_bal = MoneyField('Ending Balance', max_digits=19, decimal_places=4, default_currency='USD')
+    total_debits = MoneyField('Withdrawals', max_digits=19, decimal_places=4, default_currency='USD')
+    total_credits = MoneyField('Deposits', max_digits=19, decimal_places=4, default_currency='USD')
 
     class Meta:
         unique_together=['account', 'stmt_date']
+
+    def __str__(self):
+        return f'Wells Fargo Statement (Account {self.account}): {self.stmt_date.strftime("%m/%d/%Y")}'
 
 
 class WellsFargoStmtTrans(models.Model):

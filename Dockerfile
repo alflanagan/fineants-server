@@ -1,7 +1,7 @@
 FROM python:3.11.4-bookworm
 
 RUN apt-get update && apt-get install -qy \
-     --no-install-recommends zsh
+     --no-install-recommends zsh postgresql-client
 
 RUN useradd -m -s /usr/bin/zsh -u 1000 fineants
 USER fineants

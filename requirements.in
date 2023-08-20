@@ -3,9 +3,9 @@ django-extensions
 djangorestframework
 gunicorn[eventlet]
 psycopg2-binary
-# black is dev dependency, but has to be in same file as Django to allow
-# pip-compile to resolve dependency conflict
-black
 # money fields (note: can add exchange rate support if needed)
 django-money
 pdfminer.six
+# our ledger implementation
+django-ledger
+pyYAML

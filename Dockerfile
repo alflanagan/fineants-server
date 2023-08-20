@@ -1,12 +1,7 @@
-FROM python:slim-buster
+FROM python:3.11.4-bookworm
 
 RUN apt-get update && apt-get install -qy \
-    --no-install-recommends \
-    make build-essential libssl-dev zlib1g-dev \
-    libbz2-dev libreadline-dev libsqlite3-dev wget \
-    curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev \
-    libxmlsec1-dev libffi-dev liblzma-dev \
-    postgresql-server-dev-11 zsh sudo
+     --no-install-recommends zsh
 
 RUN useradd -m -s /usr/bin/zsh -u 1000 fineants
 USER fineants

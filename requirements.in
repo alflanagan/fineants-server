@@ -1,11 +1,19 @@
 Django
-django-extensions
+
+# for APIs
 djangorestframework
+
 gunicorn[eventlet]
-psycopg2-binary
+
+# PostgreSQL driver
+psycopg
+
 # money fields (note: can add exchange rate support if needed)
 django-money
+
 pdfminer.six
+
 # our ledger implementation
 django-ledger
+
 pyYAML

@@ -1,4 +1,4 @@
-version: "3.8"
+---
 services:
   django:
     image: fineants
@@ -20,7 +20,12 @@ services:
       - postgres
     volumes:
       - ./fineants:/home/fineants/app/fineants/
-    command: /usr/bin/zsh -c "cd /home/fineants/app; . .venv/bin/activate; cd fineants; python manage.py migrate; python manage.py runserver 0.0.0.0:8000"
+    command: |
+      cd /home/fineants/app
+      . .venv/bin/activate
+      cd fineants-server
+      python manage.py migrate
+      python manage.py runserver 0.0.0.0:8000
     # command: /usr/bin/zsh -i
 
   postgres:
@@ -34,8 +39,8 @@ services:
       POSTGRES_PASSWORD: fineants
       POSTGRES_USER: fineants
     volumes:
-        - fineants-postgres:/var/lib/postgresql/data
+      - fineants-postgres:/var/lib/postgresql/data
 
 volumes:
-    fineants-postgres:
-        external: true
+  fineants-postgres:
+    external: true
